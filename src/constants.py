@@ -1,10 +1,12 @@
-EMBEDDING_MODEL_PATH = "microsoft/mpnet-base"  # OR Path of local eg. "embedding_model/"" or the name of SentenceTransformer model eg. "sentence-transformers/all-mpnet-base-v2" from Hugging Face
+EMBEDDING_MODEL_PATH = "sentence-transformers/all-mpnet-base-v2"  # OR Path of local eg. "embedding_model/"" or the name of SentenceTransformer model eg. "sentence-transformers/all-mpnet-base-v2" from Hugging Face
 ASSYMETRIC_EMBEDDING = False  # Flag for asymmetric embedding
 EMBEDDING_DIMENSION = 768  # Embedding model settings
 TEXT_CHUNK_SIZE = 300  # Maximum number of characters in each text chunk for
 
 OLLAMA_MODEL_NAME = (
-    "llama3.2:1b"  # Name of the model used in Ollama for chat functionality
+    # "llama3.2:1b"  # Name of the model used in Ollama for chat functionality
+    "qwen3:8b"
+    # "hermes3:8b"
 )
 
 ####################################################################################################

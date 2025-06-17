@@ -25,6 +25,7 @@ def extract_text_from_pdf(file_path: str) -> str:
         str: Extracted and cleaned text from the PDF.
     """
     text = ""
+    logger.info("In function extract_text_from_pdf")
     with open(file_path, "rb") as f:
         pdf_reader = PdfReader(f)
         logger.info(f"Opened PDF file for text extraction: {file_path}")

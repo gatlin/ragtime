@@ -1,5 +1,10 @@
 # 📝 Build Your Local RAG System with LLMs
 
+This version contains upgrades by Gatlin Johnson.
+
+- The ability to toggle thinking is now supported.
+- Check the upstream project's main: it isn't OCRing PDFs.
+
 Welcome to the **Local LLM-based Retrieval-Augmented Generation (RAG) System**! This repository provides the full code to build a private, offline RAG system for managing and querying personal documents locally using a combination of OpenSearch, Sentence Transformers, and Large Language Models (LLMs). Perfect for anyone seeking a privacy-friendly solution to manage documents without relying on cloud services.
 
 ![Demo Image](images/chatbot.png)
