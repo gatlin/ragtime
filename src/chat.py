@@ -39,13 +39,16 @@ def ensure_model_pulled(model: str) -> bool:
     return True
 
 
-def run_llama_streaming(prompt: str, temperature: float) -> Optional[Iterable[str]]: 
+def run_llama_streaming(
+    prompt: str, temperature: float, mindless: bool
+) -> Optional[Iterable[str]]:
     """
-    Uses Ollama's Python library to run the LLaMA model with streaming enabled.
+    Uses Ollama's Python library to run the LLM with streaming enabled.
 
     Args:
         prompt (str): The prompt to send to the model.
         temperature (float): The response generation temperature.
+        mindless (bool): Disable thinking by setting to True.
 
     Returns:
         Optional[Iterable[str]]: A generator yielding response chunks as strings, or None if an error occurs.
@@ -53,13 +56,28 @@ def run_llama_streaming(prompt: str, temperature: float) -> Optional[Iterable[st
 
     try:
         # Now attempt to stream the response from the model
-        logger.info("Streaming response from LLaMA model.")
-        stream = ollama.chat(
-            model=OLLAMA_MODEL_NAME,
-            messages=[{"role": "user", "content": prompt}],
-            stream=True,
-            options={"temperature": temperature},
-        )
+        logger.info("Streaming response from LLM.")
+
+        # Something is really screwy - this logic is exactly backward from what
+        # it should be and yet it works.
+        # Additionally I shouldn't have to omit the parameter entirely to
+        # signal True/False.
+
+        if mindless:
+            stream = ollama.chat(
+                OLLAMA_MODEL_NAME,
+                messages=[{"role": "user", "content": prompt}],
+                stream=True,
+                options={"temperature": temperature},
+            )
+        else:
+            stream = ollama.chat(
+                OLLAMA_MODEL_NAME,
+                messages=[{"role": "user", "content": prompt}],
+                stream=True,
+                options={"temperature": temperature},
+                think=True,
+            )
     except ollama.ResponseError as e:
         logger.error(f"Error during streaming: {e.error}")
         return None
@@ -107,6 +125,7 @@ def generate_response_streaming(
     use_hybrid_search: bool,
     num_results: int,
     temperature: float,
+    think: bool,
     chat_history: Optional[List[Dict[str, str]]] = None,
 ) -> Optional[Iterable[str]]:
     """
@@ -148,4 +167,4 @@ def generate_response_streaming(
     # Generate prompt using the prompt_template function
     prompt = prompt_template(query, context, history)
 
-    return run_llama_streaming(prompt, temperature)
+    return run_llama_streaming(prompt, temperature, think)
