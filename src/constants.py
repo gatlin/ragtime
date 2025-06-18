@@ -5,7 +5,7 @@ TEXT_CHUNK_SIZE = 300  # Maximum number of characters in each text chunk for
 
 OLLAMA_MODEL_NAME = (
     # "llama3.2:1b"  # Name of the model used in Ollama for chat functionality
-    "qwen3:8b"
+    "qwen3"
     # "hermes3:8b"
 )
 
